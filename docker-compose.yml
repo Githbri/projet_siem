@@ -25,6 +25,17 @@ services:
     volumes:
       - ./data/elasticsearch:/usr/share/elasticsearch/data
 
+  suricata:
+    build:
+      context: ./Dockerfiles/suricata/.
+    network_mode: host
+    volumes:
+      - ./config/suricata/suricata.yml:/etc/suricata/suricata.yml
+      - ./data/suricata/rules:/var/lib/suricata/rules
+      - ./data/suricata/logs:/var/log/suricata/
+    # change wlp3s0 by result of ip addr
+    command: /bin/bash -c "suricata-update && suricata -c /etc/suricata/suricata.yaml -i br_juice && tail -f /var/log/cron.log"
+
 
 networks:
   somenetwork:
