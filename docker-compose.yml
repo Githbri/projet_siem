@@ -24,7 +24,13 @@ services:
     image: elasticsearch:8.16.1
     volumes:
       - ./data/elasticsearch:/usr/share/elasticsearch/data
-
+  beats:
+    image: docker.elastic.co/beats/filebeat:8.16.1
+    networks:
+      somenetwork:
+    volumes:
+      - ./data/suricata/logs/eve.json:/suricata-logs/eve.json
+      - ./config/filebeats/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
   suricata:
     build:
       context: ./Dockerfiles/suricata/.

@@ -1,0 +1,12 @@
+filebeat.inputs:
+  - type: filestream
+    id: suricata
+    paths:
+     - /suricata-logs/eve.json
+    parsers:
+     -ndjson:
+       target: ""
+       message_key: msg 
+
+output.elasticsearch:
+  hosts: "elasticsearch:9200"
